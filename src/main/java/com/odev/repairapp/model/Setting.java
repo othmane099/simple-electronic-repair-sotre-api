@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter
@@ -15,6 +18,9 @@ public class Setting {
     private String appName;
     private String appAddress;
     private String appPhone;
-    @Column(columnDefinition = "string currency_symbol 'DA'")
+    @Column(columnDefinition = "varchar(255) default 'DA'")
     private String currencySymbol;
+
+    @UpdateTimestamp
+    private LocalDateTime updated_at;
 }
