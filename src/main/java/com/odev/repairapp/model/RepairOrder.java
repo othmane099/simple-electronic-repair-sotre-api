@@ -43,6 +43,6 @@ public class RepairOrder {
     private RepairStatus repairStatus;
     @OneToOne
     private RepairPriority repairPriority;
-
-
+    @OneToOne
+    private User user;
 }
