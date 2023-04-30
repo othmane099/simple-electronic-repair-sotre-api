@@ -1,10 +1,7 @@
 package com.odev.repairapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
 @Table(name = "brands")
 public class Brand {
     @Id
@@ -22,9 +19,14 @@ public class Brand {
     private Long id;
     private String name;
     @CreationTimestamp
-    private LocalDateTime created_at;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
     @OneToMany(mappedBy = "brand")
     private List<Device> devices;
+
+    public boolean beingUsed(){
+        return this.devices.size() > 0;
+    }
 }

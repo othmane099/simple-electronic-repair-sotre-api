@@ -33,9 +33,9 @@ public class RepairOrder {
     private double prePaid;
     private LocalDateTime completed_at;
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @OneToOne
     private Device device;

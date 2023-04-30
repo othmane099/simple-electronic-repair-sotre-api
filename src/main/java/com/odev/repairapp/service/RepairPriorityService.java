@@ -9,14 +9,12 @@ import com.odev.repairapp.request.RepairPriorityRequest;
 import com.odev.repairapp.request.RepairPriorityWithIdRequest;
 import com.odev.repairapp.response.RepairPriorityResponse;
 import com.odev.repairapp.utils.ErrorCode;
-import com.odev.repairapp.validator.ObjectIdValidator;
+import com.odev.repairapp.utils.Helper;
 import com.odev.repairapp.validator.RepairPriorityValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,14 +53,26 @@ public class RepairPriorityService {
     }
 
     public RepairPriorityResponse update(RepairPriorityWithIdRequest request){
+        List<String> errors = RepairPriorityValidator.validate(request);
+        if (!errors.isEmpty())
+            throw new RepairAppException("Repair priority is not valid", ErrorCode.REPAIR_PRIORITY_NOT_VALID, errors);
+
+        // Check if object already exists in database
+        Optional<RepairPriority> optionalRepairPriority = repository.findById(request.id());
+        if (optionalRepairPriority.isEmpty())
+            throw new RepairAppException(
+                    "Repair priority is not found",
+                    ErrorCode.REPAIR_PRIORITY_NOT_FOUND
+            );
+
         RepairPriority repairPriority = repository.save(RepairPriorityWithIdRequest.toEntity(request));
         return RepairPriorityResponse.toResponse(repairPriority);
     }
 
     public void deleteById(IdRequest idRequest){
-        checkIfIdNotNull(idRequest);
+        Helper.hCheckIfIdNotNull(idRequest);
 
-        RepairPriority repairPriority = findById(idRequest);
+        RepairPriority repairPriority = myFindById(idRequest);
 
         if (repairOrderRepository.countByRepairPriority(repairPriority) > 0)
             throw new RepairAppException(
@@ -73,25 +83,13 @@ public class RepairPriorityService {
     }
 
     public RepairPriorityResponse show(IdRequest idRequest){
-        checkIfIdNotNull(idRequest);
-        RepairPriority repairPriority = findById(idRequest);
+        Helper.hCheckIfIdNotNull(idRequest);
+        RepairPriority repairPriority = myFindById(idRequest);
         return RepairPriorityResponse.toResponse(repairPriority);
 
     }
 
-    private void checkIfIdNotNull(IdRequest idRequest) throws RepairAppException{
-        List<String> errors = new ArrayList<>();
-        String validationMessage = ObjectIdValidator.validate(idRequest);
-        if (StringUtils.hasLength(validationMessage)) {
-            errors.add(validationMessage);
-            throw new RepairAppException(
-                    "Repair priority's ID should not be null",
-                    ErrorCode.NULL_ID,
-                    errors);
-        }
-    }
-
-    private RepairPriority findById(IdRequest idRequest){
+    private RepairPriority myFindById(IdRequest idRequest){
         return repository
                 .findById(idRequest.id())
                 .orElseThrow(() -> new RepairAppException(

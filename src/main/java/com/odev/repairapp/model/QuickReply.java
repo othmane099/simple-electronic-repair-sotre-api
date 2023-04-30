@@ -1,17 +1,14 @@
 package com.odev.repairapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
 public class QuickReply {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +17,8 @@ public class QuickReply {
     @Lob
     private String body;
     @CreationTimestamp
-    private LocalDateTime created_at;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 }

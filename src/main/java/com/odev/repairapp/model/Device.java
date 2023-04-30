@@ -1,10 +1,7 @@
 package com.odev.repairapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
 public class Device {
 
     @Id
@@ -23,9 +20,10 @@ public class Device {
     private String model;
     private String avatar;
     @CreationTimestamp
-    private LocalDateTime created_at;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
     @ManyToOne
     private Brand brand;
 

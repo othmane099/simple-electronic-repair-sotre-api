@@ -35,7 +35,7 @@ public class RepairPriorityController {
         RepairPriorityResponse data =  service.save(request);
         return MyResponse.<RepairPriorityResponse>builder()
                 .status(HttpStatus.OK.value())
-                .message(ResponseMessage.DATA_UPDATED_SUCCESSFULLY)
+                .message(ResponseMessage.DATA_SAVED_SUCCESSFULLY)
                 .data(data)
                 .build();
     }
