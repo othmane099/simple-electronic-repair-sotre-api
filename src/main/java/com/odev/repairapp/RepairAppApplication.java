@@ -1,9 +1,11 @@
 package com.odev.repairapp;
 
 import com.odev.repairapp.model.QuickReply;
+import com.odev.repairapp.model.RepairStatus;
 import com.odev.repairapp.model.Role;
 import com.odev.repairapp.model.User;
 import com.odev.repairapp.repository.QuickReplyRepository;
+import com.odev.repairapp.repository.RepairStatusRepository;
 import com.odev.repairapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +26,8 @@ public class RepairAppApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository,
                                         PasswordEncoder passwordEncoder,
-                                        QuickReplyRepository quickReplyRepository){
+                                        QuickReplyRepository quickReplyRepository,
+                                        RepairStatusRepository repairStatusRepository){
         return args -> {
             userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Role.ADMIN, null));
 
@@ -32,6 +35,9 @@ public class RepairAppApplication {
             quickReplyRepository.save(new QuickReply(null, "name2", "body2", null, null));
             quickReplyRepository.save(new QuickReply(null, "name1", "body1", null, null));
 
+            repairStatusRepository.save(new RepairStatus(null, "pending", null, null));
+            repairStatusRepository.save(new RepairStatus(null, "opening", null, null));
+            repairStatusRepository.save(new RepairStatus(null, "closed", null, null));
         };
     }
 

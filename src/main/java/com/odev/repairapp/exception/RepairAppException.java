@@ -27,6 +27,7 @@ public class RepairAppException extends RuntimeException{
     public RepairAppException(String message, ErrorCode errorCode) {
         super(message);
         this.errorCode = errorCode;
+        this.errorCode = errorCode;
     }
 
     public RepairAppException(String message, ErrorCode errorCode, List<String> errors) {

@@ -67,7 +67,7 @@ public class RepairStatusService {
                     ErrorCode.REPAIR_STATUS_NOT_FOUND
             );
 
-        RepairStatus repairStatus = repository.save(RepairStatusWithIdRequest.toEntity(request));
+        RepairStatus repairStatus = repository.saveAndFlush(RepairStatusWithIdRequest.toEntity(request));
         return RepairStatusResponse.toResponse(repairStatus);
     }
 
