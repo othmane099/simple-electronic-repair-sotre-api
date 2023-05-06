@@ -1,12 +1,10 @@
 package com.odev.repairapp.repository;
 
-import com.odev.repairapp.model.Device;
-import com.odev.repairapp.model.RepairOrder;
-import com.odev.repairapp.model.RepairPriority;
-import com.odev.repairapp.model.RepairStatus;
+import com.odev.repairapp.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface RepairOrderRepository extends JpaRepository<RepairOrder, Long> {
+public interface RepairOrderRepository extends JpaRepository<RepairOrder, Long>, JpaSpecificationExecutor<RepairOrder> {
     Long countByRepairPriority(RepairPriority priority);
     Long countByRepairStatus(RepairStatus repairStatus);
 

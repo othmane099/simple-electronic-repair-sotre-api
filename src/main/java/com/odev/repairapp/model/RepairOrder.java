@@ -1,18 +1,16 @@
 package com.odev.repairapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
 @Table(indexes = @Index(columnList = "uuid"))
 public class RepairOrder {
 
@@ -31,8 +29,9 @@ public class RepairOrder {
     private Double subTotal;
     private double totalCost;
     private double prePaid;
-    private LocalDateTime completed_at;
+    private LocalDateTime completedAt;
     @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -43,6 +42,12 @@ public class RepairOrder {
     private RepairStatus repairStatus;
     @OneToOne
     private RepairPriority repairPriority;
+    @ManyToMany
+    @JoinTable(
+            name = "repair_order_defect",
+            joinColumns = @JoinColumn(name = "repair_order_id"),
+            inverseJoinColumns = @JoinColumn(name = "defect_id"))
+    private List<Defect> defects;
     @OneToOne
     private User user;
 }

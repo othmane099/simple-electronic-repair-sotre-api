@@ -17,7 +17,7 @@ public class DeviceValidator {
         }
 
         if (request.brand() == null || request.brand().id() == null){
-            errors.add("Device's name and Device's ID should not be null");
+            errors.add("Device's brand and brand's ID should not be null");
         }
 
         return errors;

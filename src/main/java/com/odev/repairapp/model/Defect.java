@@ -1,17 +1,15 @@
 package com.odev.repairapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
 public class Defect {
 
     @Id
@@ -20,12 +18,16 @@ public class Defect {
     private String title;
     private String requiredTime;
     private double cost;
-    private Double price;
+    private double price;
     @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     @ManyToOne
     private Device device;
+
+    @ManyToMany(mappedBy = "defects")
+    private List<RepairOrder> repairOrders;
 
 }
