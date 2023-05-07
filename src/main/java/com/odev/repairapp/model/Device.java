@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,5 @@ public class Device {
     private Brand brand;
 
     @OneToMany(mappedBy = "device", cascade = CascadeType.REMOVE)
-    private List<Defect> defects;
+    private List<Defect> defects = new ArrayList<>();
 }

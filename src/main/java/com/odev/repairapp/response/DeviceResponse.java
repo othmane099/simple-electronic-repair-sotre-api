@@ -9,7 +9,7 @@ public record DeviceResponse(
         String name,
         String model,
         String avatar,
-        BrandResponse brandResponse,
+        BrandResponse brand,
         int totalDefects,
         LocalDateTime createdAt,
         LocalDateTime updatedAt) {
@@ -21,7 +21,7 @@ public record DeviceResponse(
                 device.getModel(),
                 device.getAvatar(),
                 BrandResponse.toResponse(device.getBrand()),
-                device.getDefects().size(),
+                0,
                 device.getCreatedAt(),
                 device.getUpdatedAt());
     }

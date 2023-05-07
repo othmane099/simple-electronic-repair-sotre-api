@@ -16,7 +16,7 @@ public class DeviceValidator {
             errors.add("Device's name should not be null or empty");
         }
 
-        if (request.brand() == null || request.brand().id() == null){
+        if (request.brandId() == null){
             errors.add("Device's brand and brand's ID should not be null");
         }
 
@@ -33,8 +33,8 @@ public class DeviceValidator {
             errors.add("Device's name should not be null or empty");
         }
 
-        if (request.brand() == null || request.brand().id() == null){
-            errors.add("Device's name and Device's ID should not be null");
+        if (request.brandId() == null){
+            errors.add("Device's brandID should not be null");
         }
 
         return errors;

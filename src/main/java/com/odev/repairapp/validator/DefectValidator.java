@@ -20,8 +20,8 @@ public class DefectValidator {
             errors.add("Defect's required time should not be null or empty");
         }
 
-        if (request.device() == null || request.device().id() == null){
-            errors.add("Defect's device and device's ID should not be null");
+        if (request.deviceId() == null){
+            errors.add("Defect's deviceID should not be null");
         }
 
         return errors;
@@ -41,8 +41,8 @@ public class DefectValidator {
             errors.add("Defect's required time should not be null or empty");
         }
 
-        if (request.device() == null || request.device().id() == null){
-            errors.add("Defect's device and device's ID should not be null");
+        if (request.deviceId() == null){
+            errors.add("Defect's deviceID should not be null");
         }
 
         return errors;

@@ -5,7 +5,7 @@ import com.odev.repairapp.model.QuickReply;
 
 import java.time.LocalDateTime;
 
-public record BrandResponse(Long id, String name, boolean devicesNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
+public record BrandResponse(Long id, String name, boolean hasDevices, LocalDateTime createdAt, LocalDateTime updatedAt) {
 
     public static BrandResponse toResponse(Brand brand){
         return new BrandResponse(

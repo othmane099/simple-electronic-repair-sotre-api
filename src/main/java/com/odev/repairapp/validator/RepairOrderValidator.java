@@ -20,6 +20,18 @@ public class RepairOrderValidator {
             errors.add("Customer's name should not be null or empty");
         }
 
+        if (request.repairPriorityId() == null)
+            errors.add("Order's priorityId should not be null");
+
+        if (request.deviceId() == null)
+            errors.add("Order's deviceId should not be null");
+
+        if (request.repairStatusId() == null)
+            errors.add("Order's statusId should not be null");
+
+        if (request.defectsIds() == null)
+            errors.add("Order's defects should not be null");
+
         return errors;
     }
 
@@ -36,6 +48,18 @@ public class RepairOrderValidator {
         if (request.email() == null || !StringUtils.hasLength(request.email())){
             errors.add("Customer's name should not be null or empty");
         }
+
+        if (request.repairPriorityId() == null)
+            errors.add("Order's priorityId should not be null");
+
+        if (request.deviceId() == null)
+            errors.add("Order's deviceId should not be null");
+
+        if (request.repairStatusId() == null)
+            errors.add("Order's statusId should not be null");
+
+        if (request.defectsIds() == null)
+            errors.add("Order's defects should not be null");
 
         return errors;
     }

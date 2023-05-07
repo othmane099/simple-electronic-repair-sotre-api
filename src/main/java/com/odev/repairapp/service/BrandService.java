@@ -14,6 +14,7 @@ import com.odev.repairapp.validator.BrandValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BrandService {
 
     private final BrandRepository repository;
@@ -64,7 +66,7 @@ public class BrandService {
                     ErrorCode.BRAND_NOT_FOUND
             );
 
-        Brand brand = repository.save(BrandWithIdRequest.toEntity(request));
+        Brand brand = repository.saveAndFlush(BrandWithIdRequest.toEntity(request));
         return BrandResponse.toResponse(brand);
     }
 

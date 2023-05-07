@@ -20,7 +20,7 @@ public class Defect {
     private double cost;
     private double price;
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -30,4 +30,18 @@ public class Defect {
     @ManyToMany(mappedBy = "defects")
     private List<RepairOrder> repairOrders;
 
+    @Override
+    public String toString() {
+        return "Defect{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", requiredTime='" + requiredTime + '\'' +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", device=" + device +
+                ", repairOrders=" + repairOrders +
+                '}';
+    }
 }

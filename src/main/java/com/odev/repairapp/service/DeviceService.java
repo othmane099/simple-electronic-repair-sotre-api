@@ -1,8 +1,10 @@
 package com.odev.repairapp.service;
 
 import com.odev.repairapp.exception.RepairAppException;
+import com.odev.repairapp.model.Brand;
 import com.odev.repairapp.model.Device;
 import com.odev.repairapp.model.filter_key.DeviceFilterKey;
+import com.odev.repairapp.repository.BrandRepository;
 import com.odev.repairapp.repository.DeviceRepository;
 import com.odev.repairapp.repository.RepairOrderRepository;
 import com.odev.repairapp.request.DeviceRequest;
@@ -30,6 +32,7 @@ public class DeviceService {
 
     private final DeviceRepository repository;
     private final RepairOrderRepository repairOrderRepository;
+    private final BrandRepository brandRepository;
 
     public Page<DeviceResponse> findAll(int pageNum, int pageSize, FilterDeviceRequest request) {
         List<String> errors = FilterDataValidator.validate(request);
@@ -74,7 +77,17 @@ public class DeviceService {
                     ErrorCode.DEVICE_ALREADY_IN_USE
             );
 
-        Device device = repository.save(DeviceRequest.toEntity(request));
+        // Check if Device's Brand exist in Database
+        Brand brand = brandRepository
+                .findById(request.brandId())
+                .orElseThrow(() -> new RepairAppException(
+                        "Device's brand not found",
+                        ErrorCode.BRAND_NOT_FOUND
+                ));
+
+        Device device = DeviceRequest.toEntity(request);
+        device.setBrand(brand);
+        device = repository.save(device);
         return DeviceResponse.toResponse(device);
     }
 
@@ -91,7 +104,16 @@ public class DeviceService {
                     ErrorCode.DEVICE_NOT_FOUND
             );
 
-        Device device = repository.save(DeviceWithIdRequest.toEntity(request));
+        Brand brand = brandRepository
+                .findById(request.brandId())
+                .orElseThrow(() -> new RepairAppException(
+                        "Device's brand not found",
+                        ErrorCode.BRAND_NOT_FOUND
+                ));
+
+        Device device = DeviceWithIdRequest.toEntity(request);
+        device.setBrand(brand);
+        device = repository.save(device);
         return DeviceResponse.toResponse(device);
     }
 

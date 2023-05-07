@@ -1,12 +1,7 @@
 package com.odev.repairapp;
 
-import com.odev.repairapp.model.QuickReply;
-import com.odev.repairapp.model.RepairStatus;
-import com.odev.repairapp.model.Role;
-import com.odev.repairapp.model.User;
-import com.odev.repairapp.repository.QuickReplyRepository;
-import com.odev.repairapp.repository.RepairStatusRepository;
-import com.odev.repairapp.repository.UserRepository;
+import com.odev.repairapp.model.*;
+import com.odev.repairapp.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,8 +21,12 @@ public class RepairAppApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository,
                                         PasswordEncoder passwordEncoder,
+                                        RepairPriorityRepository repairPriorityRepository,
                                         QuickReplyRepository quickReplyRepository,
-                                        RepairStatusRepository repairStatusRepository){
+                                        RepairStatusRepository repairStatusRepository,
+                                        BrandRepository brandRepository,
+                                        DeviceRepository deviceRepository,
+                                        DefectRepository defectRepository){
         return args -> {
             userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Role.ADMIN, null));
 
@@ -38,6 +37,16 @@ public class RepairAppApplication {
             repairStatusRepository.save(new RepairStatus(null, "pending", null, null));
             repairStatusRepository.save(new RepairStatus(null, "opening", null, null));
             repairStatusRepository.save(new RepairStatus(null, "closed", null, null));
+
+            brandRepository.save(new Brand(null, "hp", null, null, null));
+            Brand brand = brandRepository.save(new Brand(null, "DELL", null, null, null));
+            brandRepository.save(new Brand(null, "Acer", null, null, null));
+
+            Device device = deviceRepository.save(new Device(null, "inspiron 15", "3000 series", null, null, null, brand, null));
+
+            Defect defect = defectRepository.save(new Defect(null, "broken screen", "3", 1.0, 50.0, null, null, device, null));
+
+            repairPriorityRepository.save(new RepairPriority(null,0, "normal", 0.0, null, null));
         };
     }
 

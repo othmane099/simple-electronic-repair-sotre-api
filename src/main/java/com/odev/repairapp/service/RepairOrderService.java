@@ -1,9 +1,9 @@
 package com.odev.repairapp.service;
 
 import com.odev.repairapp.exception.RepairAppException;
-import com.odev.repairapp.model.RepairOrder;
+import com.odev.repairapp.model.*;
 import com.odev.repairapp.model.filter_key.RepairOrderFilterKey;
-import com.odev.repairapp.repository.RepairOrderRepository;
+import com.odev.repairapp.repository.*;
 import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import com.odev.repairapp.request.IdRequest;
 import com.odev.repairapp.request.RepairOrderRequest;
@@ -21,8 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +29,10 @@ import java.util.Optional;
 public class RepairOrderService {
 
     private final RepairOrderRepository repository;
+    private final RepairPriorityRepository repairPriorityRepository;
+    private final DeviceRepository deviceRepository;
+    private final DefectRepository defectRepository;
+    private final RepairStatusRepository repairStatusRepository;
     public Page<RepairOrderResponse> findAll(int pageNum, int pageSize, FilterRepairOrderRequest request) {
         List<String> errors = FilterDataValidator.validate(request);
         if (!errors.isEmpty())
@@ -65,13 +68,37 @@ public class RepairOrderService {
                     errors
             );
 
+        RepairPriority repairPriority = repairPriorityRepository
+                .findById(request.repairPriorityId())
+                .orElseThrow(() -> new RepairAppException("Repair priority not found", ErrorCode.REPAIR_PRIORITY_NOT_FOUND));
+
+        Device device = deviceRepository
+                .findById(request.repairPriorityId())
+                .orElseThrow(() -> new RepairAppException("Device not found", ErrorCode.DEVICE_NOT_FOUND));
+
+        RepairStatus repairStatus = repairStatusRepository.findById(request.repairStatusId())
+                .orElseThrow(() -> new RepairAppException("Status not found", ErrorCode.REPAIR_STATUS_NOT_FOUND));
+
+        List<Defect> defects = new ArrayList<>();
+        request.defectsIds().forEach(id -> {
+            Defect defect = defectRepository.findById(id)
+                    .orElseThrow(() -> new RepairAppException("Defect not found", ErrorCode.DEFECT_NOT_FOUND));
+            defects.add(defect);
+        });
+
+
         RepairOrder repairOrder = RepairOrderRequest.toEntity(request);
+        repairOrder.setUuid(UUID.randomUUID());
+        repairOrder.setTracking(String.valueOf(System.currentTimeMillis()));
+        repairOrder.setRepairPriority(repairPriority);
+        repairOrder.setDefects(defects);
+        repairOrder.setDevice(device);
+        repairOrder.setRepairStatus(repairStatus);
 
         if (request.prePaid() != 0){
             double due = request.totalCharges() - request.prePaid();
             repairOrder.setPaymentStatus( due < 1);
         }
-
 
         RepairOrder repairOrderSaved = repository.save(repairOrder);
         return RepairOrderResponse.toResponse(repairOrderSaved);
@@ -90,7 +117,35 @@ public class RepairOrderService {
                     ErrorCode.REPAIR_ORDER_NOT_FOUND
             );
 
-        RepairOrder repairOrder = repository.save(RepairOrderWithIdRequest.toEntity(request));
+        RepairPriority repairPriority = repairPriorityRepository
+                .findById(request.repairPriorityId())
+                .orElseThrow(() -> new RepairAppException("Repair priority not found", ErrorCode.REPAIR_PRIORITY_NOT_FOUND));
+
+        RepairStatus repairStatus = repairStatusRepository.findById(request.repairStatusId())
+                .orElseThrow(() -> new RepairAppException("Status not found", ErrorCode.REPAIR_STATUS_NOT_FOUND));
+
+
+        Device device = deviceRepository
+                .findById(request.repairPriorityId())
+                .orElseThrow(() -> new RepairAppException("Device not found", ErrorCode.DEVICE_NOT_FOUND));
+
+        List<Defect> defects = new ArrayList<>();
+        request.defectsIds().forEach(id -> {
+            Defect defect = defectRepository.findById(id)
+                    .orElseThrow(() -> new RepairAppException("Defect not found", ErrorCode.DEFECT_NOT_FOUND));
+            defects.add(defect);
+        });
+
+
+        RepairOrder repairOrder = RepairOrderWithIdRequest.toEntity(request);
+        repairOrder.setUuid(optionalRepairOrder.get().getUuid());
+        repairOrder.setRepairStatus(optionalRepairOrder.get().getRepairStatus());
+        repairOrder.setRepairStatus(repairStatus);
+        repairOrder.setRepairPriority(repairPriority);
+        repairOrder.setDefects(defects);
+        repairOrder.setDevice(device);
+
+        repairOrder = repository.saveAndFlush(repairOrder);
         return RepairOrderResponse.toResponse(repairOrder);
     }
 

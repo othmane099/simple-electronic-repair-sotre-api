@@ -16,7 +16,9 @@ public class RepairOrder {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(updatable = false)
     private String tracking;
+    @Column(updatable = false)
     private UUID uuid;
     private boolean paymentStatus;
     private String name;
@@ -31,7 +33,7 @@ public class RepairOrder {
     private double prePaid;
     private LocalDateTime completedAt;
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -50,4 +52,11 @@ public class RepairOrder {
     private List<Defect> defects;
     @OneToOne
     private User user;
+
+    @Override
+    public String toString() {
+        return "RepairOrder{" +
+                "uuid=" + uuid +
+                '}';
+    }
 }

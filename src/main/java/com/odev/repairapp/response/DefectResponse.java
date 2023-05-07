@@ -10,7 +10,7 @@ public record DefectResponse(
         String requiredTime,
         double price,
         double cost,
-        DeviceResponse deviceResponse,
+        DeviceResponse device,
         LocalDateTime createdAt,
         LocalDateTime updatedAt) {
 

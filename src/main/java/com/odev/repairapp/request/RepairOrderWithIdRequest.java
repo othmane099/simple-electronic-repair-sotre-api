@@ -3,7 +3,6 @@ package com.odev.repairapp.request;
 import com.odev.repairapp.model.RepairOrder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record RepairOrderWithIdRequest(
         Long id,
@@ -16,11 +15,13 @@ public record RepairOrderWithIdRequest(
         double subTotal,
         double totalCost,
         double profit,
-        RepairPriorityRequest repairPriorityRequest,
+        double prePaid,
+        double totalCharges,
+        Long repairPriorityId,
         boolean isDeviceCollected,
-        List<DefectRequest> defectRequests,
-        BrandRequest brandRequest,
-        DeviceRequest deviceRequest
+        List<Long> defectsIds,
+        Long deviceId,
+        Long repairStatusId
 ) {
 
     public static RepairOrder toEntity(RepairOrderWithIdRequest request){
@@ -33,8 +34,6 @@ public record RepairOrderWithIdRequest(
                 .serialNumber(request.serialNumber())
                 .subTotal(request.subTotal())
                 .totalCost(request.totalCost())
-                .repairPriority(RepairPriorityRequest.toEntity(request.repairPriorityRequest))
-                .defects(request.defectRequests().stream().map(DefectRequest::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

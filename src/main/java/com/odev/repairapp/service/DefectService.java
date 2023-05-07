@@ -2,8 +2,10 @@ package com.odev.repairapp.service;
 
 import com.odev.repairapp.exception.RepairAppException;
 import com.odev.repairapp.model.Defect;
+import com.odev.repairapp.model.Device;
 import com.odev.repairapp.model.filter_key.DefectFilterKey;
 import com.odev.repairapp.repository.DefectRepository;
+import com.odev.repairapp.repository.DeviceRepository;
 import com.odev.repairapp.request.DefectRequest;
 import com.odev.repairapp.request.DefectWithIdRequest;
 import com.odev.repairapp.request.IdRequest;
@@ -28,6 +30,7 @@ import java.util.Optional;
 public class DefectService {
 
     private final DefectRepository repository;
+    private final DeviceRepository deviceRepository;
     public Page<DefectResponse> findAll(int pageNum, int pageSize, FilterDefectRequest request) {
         List<String> errors = FilterDataValidator.validate(request);
         if (!errors.isEmpty())
@@ -63,8 +66,16 @@ public class DefectService {
                     errors
             );
 
+        Device device = deviceRepository
+                .findById(request.deviceId())
+                .orElseThrow(() -> new RepairAppException(
+                        "Defect's device not found",
+                        ErrorCode.DEVICE_NOT_FOUND
+                ));
 
-        Defect defect = repository.save(DefectRequest.toEntity(request));
+        Defect defect = DefectRequest.toEntity(request);
+        defect.setDevice(device);
+        defect = repository.save(defect);
         return DefectResponse.toResponse(defect);
     }
 
@@ -81,7 +92,17 @@ public class DefectService {
                     ErrorCode.DEFECT_NOT_FOUND
             );
 
-        Defect defect = repository.save(DefectWithIdRequest.toEntity(request));
+        Device device = deviceRepository
+                .findById(request.deviceId())
+                .orElseThrow(() -> new RepairAppException(
+                        "Defect's device not found",
+                        ErrorCode.DEVICE_NOT_FOUND
+                ));
+
+        Defect defect = DefectWithIdRequest.toEntity(request);
+        defect.setDevice(device);
+        System.out.println(defect);
+        defect = repository.saveAndFlush(defect);
         return DefectResponse.toResponse(defect);
     }
 
