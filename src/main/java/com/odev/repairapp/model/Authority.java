@@ -3,33 +3,44 @@ package com.odev.repairapp.model;
 public enum Authority {
 
     //GENERAL
-    ACCESS_DASHBOARD,
+    ACCESS_DASHBOARD("Dashboard Access"),
 
     //WORKSHOP
-    MANAGE_REPAIR_ORDER,
-    EDIT_REPAIR_ORDER,
-    REMOVE_REPAIR_ORDER,
+    MANAGE_REPAIR_ORDER("Mangae Orders"),
+    EDIT_REPAIR_ORDER("Edit Orders"),
+    REMOVE_REPAIR_ORDER("Remove Orders"),
 
     //DATA ENTRIES
-    MANAGE_DEVICE,
-    MANAGE_DEFECT,
-    MANAGE_BRAND,
+    MANAGE_DEVICE("Manage Devices"),
+    MANAGE_DEFECT("Manage Defects"),
+    MANAGE_BRAND("Manage Brands"),
 
     // TOOLS
-    MANAGE_QUICK_REPLY,
-    MANAGE_REPAIR_STATUS,
-    MANAGE_REPAIR_PRIORITY,
-    ACCESS_REPORT,
+    MANAGE_QUICK_REPLY("Manage Quick Replies"),
+    MANAGE_REPAIR_STATUS("Manage Statuses"),
+    MANAGE_REPAIR_PRIORITY("Manage Priorities"),
+    ACCESS_REPORT("Access Report"),
 
     //ADMINISTRATION
-    GENERAL_SETTING,
-    OUTGOING_MAIL,
-    SMS_GATEWAY,
-    CURRENCY_CONFIGURATION,
-    AUTHENTICATION,
-    LOCALIZATION,
+    GENERAL_SETTING("General Setting"),
+    OUTGOING_MAIL("Outgoing Mail"),
+    SMS_GATEWAY("SMS Gateway"),
+    CURRENCY_CONFIGURATION("Currency Configuration"),
+    AUTHENTICATION("Authentication"),
+    LOCALIZATION("Localization"),
 
     //SYSTEM
-    DATABASE_BACKUP
+    DATABASE_BACKUP("Database Backup");
+
+    private final String label;
+
+    Authority(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
 
 }
