@@ -1,9 +1,6 @@
 package com.odev.repairapp.service;
 
-import com.odev.repairapp.model.Role;
-import com.odev.repairapp.model.Token;
-import com.odev.repairapp.model.TokenType;
-import com.odev.repairapp.model.User;
+import com.odev.repairapp.model.*;
 import com.odev.repairapp.repository.TokenRepository;
 import com.odev.repairapp.repository.UserRepository;
 import com.odev.repairapp.request.AuthenticationRequest;
@@ -14,6 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .authority(Collections.singletonList(Authority.AUTHENTICATION))
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);

@@ -13,6 +13,7 @@ import com.odev.repairapp.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class RepairOrderController {
     private final RepairOrderService service;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('MANAGE_REPAIR_ORDER')")
     public MyResponse<Page<RepairOrderResponse>> findAll(
             @RequestParam(defaultValue = Constant.DEFAULT_PAGE_STRING) int page,
             @RequestParam(defaultValue = Constant.DEFAULT_SIZE_STRING) int size,
@@ -35,6 +37,7 @@ public class RepairOrderController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('MANAGE_REPAIR_ORDER')")
     public MyResponse<RepairOrderResponse> save(@RequestBody RepairOrderRequest request){
         RepairOrderResponse data =  service.save(request);
         return MyResponse.<RepairOrderResponse>builder()
@@ -45,6 +48,7 @@ public class RepairOrderController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('EDIT_REPAIR_ORDER')")
     public MyResponse<RepairOrderResponse> update(@RequestBody RepairOrderWithIdRequest request){
         RepairOrderResponse data = service.update(request);
         return MyResponse.<RepairOrderResponse>builder()
@@ -55,6 +59,7 @@ public class RepairOrderController {
     }
 
     @GetMapping("/show")
+    @PreAuthorize("hasAuthority('MANAGE_REPAIR_ORDER')")
     public MyResponse<RepairOrderResponse> findById(@RequestBody IdRequest idRequest){
         RepairOrderResponse data = service.show(idRequest);
         return MyResponse.<RepairOrderResponse>builder()
@@ -66,6 +71,7 @@ public class RepairOrderController {
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('REMOVE_REPAIR_ORDER')")
     public MyDeleteResponse deleteById(@RequestBody IdRequest idRequest){
         service.deleteById(idRequest);
         return MyDeleteResponse.builder()

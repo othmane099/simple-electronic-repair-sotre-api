@@ -10,6 +10,7 @@ import com.odev.repairapp.service.RepairStatusService;
 import com.odev.repairapp.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/repair-statuses")
+@PreAuthorize("hasAuthority('MANAGE_REPAIR_STATUS')")
 public class RepairStatusController {
 
     private final RepairStatusService service;

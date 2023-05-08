@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,14 +37,17 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Authority> authority;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return authority
+                .stream()
+                .map(a -> new SimpleGrantedAuthority(a.name())).collect(Collectors.toList());
     }
 
     @Override

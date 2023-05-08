@@ -6,7 +6,7 @@ public enum Authority {
     ACCESS_DASHBOARD("Dashboard Access"),
 
     //WORKSHOP
-    MANAGE_REPAIR_ORDER("Mangae Orders"),
+    MANAGE_REPAIR_ORDER("Manage Orders"),
     EDIT_REPAIR_ORDER("Edit Orders"),
     REMOVE_REPAIR_ORDER("Remove Orders"),
 

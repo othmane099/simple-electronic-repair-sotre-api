@@ -1,5 +1,6 @@
 package com.odev.repairapp.controller;
 
+import com.odev.repairapp.model.Authority;
 import com.odev.repairapp.request.*;
 import com.odev.repairapp.request.filter.FilterQuickReplyRequest;
 import com.odev.repairapp.request.filter.FilterRequest;
@@ -12,11 +13,13 @@ import com.odev.repairapp.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/quick-replies")
+@PreAuthorize("hasAuthority('MANAGE_QUICK_REPLY')")
 public class QuickReplyController {
     private final QuickReplyService service;
 

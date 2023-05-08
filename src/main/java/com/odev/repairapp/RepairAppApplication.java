@@ -9,6 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static com.odev.repairapp.model.Authority.*;
+
 @SpringBootApplication
 @RequiredArgsConstructor
 public class RepairAppApplication {
@@ -28,7 +33,8 @@ public class RepairAppApplication {
                                         DeviceRepository deviceRepository,
                                         DefectRepository defectRepository){
         return args -> {
-            userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Role.ADMIN, null));
+            userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Arrays.stream(Authority.values()).toList(), null));
+            userRepository.save(new User(2L, "user", "user", "user@mail.com", passwordEncoder.encode("123456"), List.of(MANAGE_DEVICE, MANAGE_BRAND, MANAGE_DEFECT), null));
 
             quickReplyRepository.save(new QuickReply(null, "name3", "body3", null, null));
             quickReplyRepository.save(new QuickReply(null, "name2", "body2", null, null));

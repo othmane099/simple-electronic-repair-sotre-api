@@ -10,6 +10,7 @@ import com.odev.repairapp.service.BrandService;
 import com.odev.repairapp.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/brands")
+@PreAuthorize("hasAuthority('MANAGE_BRAND')")
 public class BrandController {
 
     private final BrandService service;
