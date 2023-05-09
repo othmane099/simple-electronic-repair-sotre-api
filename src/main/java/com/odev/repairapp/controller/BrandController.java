@@ -7,13 +7,17 @@ import com.odev.repairapp.response.BrandResponse;
 import com.odev.repairapp.response.wrapper.MyDeleteResponse;
 import com.odev.repairapp.response.wrapper.MyResponse;
 import com.odev.repairapp.service.BrandService;
+import com.odev.repairapp.utils.CSVHelper;
 import com.odev.repairapp.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.odev.repairapp.utils.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +46,30 @@ public class BrandController {
                 .build();
     }
 
+    @PostMapping("/save/csv")
+    public MyResponse<List<BrandResponse>> uploadFile(@RequestParam("file") MultipartFile file) {
+        if (CSVHelper.hasCSVFormat(file)) {
+            try {
+                return MyResponse.<List<BrandResponse>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(CSV_FILE_UPLOADED_SUCCESSFULLY)
+                        .data(service.save(file))
+                        .build();
+            } catch (Exception e) {
+                return MyResponse.<List<BrandResponse>>builder()
+                        .status(HttpStatus.EXPECTATION_FAILED.value())
+                        .message(CSV_FILE_UPLOADING_FAILED)
+                        .data(null)
+                        .build();
+            }
+        }
+
+        return MyResponse.<List<BrandResponse>>builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(FILE_NOT_VALID)
+                .data(null)
+                .build();
+    }
     @PostMapping("/update")
     public MyResponse<BrandResponse> update(@RequestBody BrandWithIdRequest request){
         BrandResponse data = service.update(request);
