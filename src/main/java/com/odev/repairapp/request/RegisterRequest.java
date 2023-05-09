@@ -1,18 +1,24 @@
 package com.odev.repairapp.request;
 
+import com.odev.repairapp.model.Authority;
+import com.odev.repairapp.model.Brand;
+import com.odev.repairapp.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class RegisterRequest {
+import java.util.List;
 
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
+public record RegisterRequest(String firstname, String lastname, String email, String password,
+                              List<Authority> authorityList) {
+
+    public static User toEntity(RegisterRequest request){
+        return User.builder()
+                .firstname(request.firstname())
+                .lastname(request.lastname())
+                .email(request.email())
+                .authority(request.authorityList())
+                .build();
+    }
 }

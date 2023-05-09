@@ -1,18 +1,24 @@
 package com.odev.repairapp.service;
 
-import com.odev.repairapp.model.*;
+import com.odev.repairapp.exception.RepairAppException;
+import com.odev.repairapp.model.Token;
+import com.odev.repairapp.model.TokenType;
+import com.odev.repairapp.model.User;
 import com.odev.repairapp.repository.TokenRepository;
 import com.odev.repairapp.repository.UserRepository;
 import com.odev.repairapp.request.AuthenticationRequest;
 import com.odev.repairapp.request.RegisterRequest;
 import com.odev.repairapp.response.AuthenticationResponse;
+import com.odev.repairapp.response.UserResponse;
+import com.odev.repairapp.utils.ErrorCode;
+import com.odev.repairapp.validator.AuthenticationValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,20 +29,15 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .authority(Collections.singletonList(Authority.AUTHENTICATION))
-                .build();
-        var savedUser = repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+    public UserResponse register(RegisterRequest request) {
+        List<String> errors = AuthenticationValidator.validate(request);
+        if (!errors.isEmpty())
+            throw new RepairAppException("User's data not valid", ErrorCode.USER_NOT_VALID, errors);
+
+        User user = RegisterRequest.toEntity(request);
+        user.setPassword(passwordEncoder.encode(request.password()));
+        User savedUser = repository.save(user);
+        return UserResponse.toResponse(savedUser);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

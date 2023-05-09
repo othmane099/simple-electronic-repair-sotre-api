@@ -2,14 +2,10 @@ package com.odev.repairapp.model.filter_key;
 
 public enum RepairOrderFilterKey implements FilterKey{
     TRACKING("tracking"),
-    STATUS("status"),
-    PRIORITY("priority"),
-    TECHNICIAN("technician"),
+    CUSTOMER_NAME("name"),
+    CUSTOMER_PHONE("phone"),
     CREATED_AT("createdAt"),
-    ORDER_NUMBER("orderNumber"),
-    UPDATED_AT("updatedAt"),
-    CLOSED_AT("closedAt");
-
+    UPDATED_AT("updatedAt");
     private final String val;
 
     RepairOrderFilterKey(String val) {

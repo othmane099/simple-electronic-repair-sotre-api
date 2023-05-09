@@ -22,6 +22,7 @@ public enum Authority {
     ACCESS_REPORT("Access Report"),
 
     //ADMINISTRATION
+    MANAGE_USERS("Manage Users"),
     GENERAL_SETTING("General Setting"),
     OUTGOING_MAIL("Outgoing Mail"),
     SMS_GATEWAY("SMS Gateway"),

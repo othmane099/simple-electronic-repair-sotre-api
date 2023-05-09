@@ -33,8 +33,8 @@ public class RepairAppApplication {
                                         DeviceRepository deviceRepository,
                                         DefectRepository defectRepository){
         return args -> {
-            userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Arrays.stream(Authority.values()).toList(), null));
-            userRepository.save(new User(2L, "user", "user", "user@mail.com", passwordEncoder.encode("123456"), List.of(MANAGE_DEVICE, MANAGE_BRAND, MANAGE_DEFECT), null));
+            userRepository.save(new User(1L, "admin", "admin", "admin@mail.com", passwordEncoder.encode("123456"), Arrays.stream(Authority.values()).toList(), null, null, null));
+            userRepository.save(new User(2L, "user", "user", "user@mail.com", passwordEncoder.encode("123456"), List.of(MANAGE_DEVICE, MANAGE_BRAND, MANAGE_DEFECT), null, null, null));
 
             quickReplyRepository.save(new QuickReply(null, "name3", "body3", null, null));
             quickReplyRepository.save(new QuickReply(null, "name2", "body2", null, null));

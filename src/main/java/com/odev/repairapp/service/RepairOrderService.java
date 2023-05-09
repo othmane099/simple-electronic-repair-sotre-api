@@ -2,13 +2,13 @@ package com.odev.repairapp.service;
 
 import com.odev.repairapp.exception.RepairAppException;
 import com.odev.repairapp.model.*;
-import com.odev.repairapp.model.filter_key.RepairOrderFilterKey;
 import com.odev.repairapp.repository.*;
-import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import com.odev.repairapp.request.IdRequest;
 import com.odev.repairapp.request.RepairOrderRequest;
+import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import com.odev.repairapp.request.filter.FilterRepairOrderRequest;
 import com.odev.repairapp.response.RepairOrderResponse;
+import com.odev.repairapp.utils.CriteriaFilter;
 import com.odev.repairapp.utils.ErrorCode;
 import com.odev.repairapp.utils.Helper;
 import com.odev.repairapp.validator.RepairOrderValidator;
@@ -18,16 +18,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static com.odev.repairapp.model.filter_key.RepairOrderFilterKey.*;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class RepairOrderService {
 
+    private final CriteriaFilter<RepairOrder> criteriaFilter;
     private final RepairOrderRepository repository;
     private final RepairPriorityRepository repairPriorityRepository;
     private final DeviceRepository deviceRepository;
@@ -49,13 +56,14 @@ public class RepairOrderService {
                 )
         );
 
-        return repository.findAll(
-                (root, cq, cb) -> cb.like(
-                        root.get(RepairOrderFilterKey.TRACKING.getValue()),
-                        "%" + request.keyword() + "%"
-                ),
-                pageable
-        ).map(RepairOrderResponse::toResponse);
+        String keyword = request.keyword();
+        Specification<RepairOrder> specification = criteriaFilter.contains(TRACKING.getValue(), keyword)
+                .or(criteriaFilter.contains(CUSTOMER_PHONE.getValue(), keyword))
+                .or(criteriaFilter.contains(CUSTOMER_NAME.getValue(), keyword))
+                .or(criteriaFilter.hasStatus("repairStatus", keyword));
+
+    return repository.findAll(specification, pageable)
+            .map(RepairOrderResponse::toResponse);
     }
 
     public RepairOrderResponse save(RepairOrderRequest request){
