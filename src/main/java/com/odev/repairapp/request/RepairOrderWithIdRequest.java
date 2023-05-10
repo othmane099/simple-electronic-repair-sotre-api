@@ -12,13 +12,11 @@ public record RepairOrderWithIdRequest(
         String address,
         String serialNumber,
         String diagnostics,
-        double subTotal,
         double totalCost,
         double profit,
         double prePaid,
-        double totalCharges,
+        double totalCharge,
         Long repairPriorityId,
-        boolean isDeviceCollected,
         List<Long> defectsIds,
         Long deviceId,
         Long repairStatusId
@@ -32,7 +30,7 @@ public record RepairOrderWithIdRequest(
                 .phone(request.phone())
                 .address(request.address())
                 .serialNumber(request.serialNumber())
-                .subTotal(request.subTotal())
+                .totalCharge(request.totalCharge())
                 .totalCost(request.totalCost())
                 .build();
     }

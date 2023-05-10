@@ -5,6 +5,7 @@ import com.odev.repairapp.model.*;
 import com.odev.repairapp.repository.*;
 import com.odev.repairapp.request.IdRequest;
 import com.odev.repairapp.request.RepairOrderRequest;
+import com.odev.repairapp.request.RepairOrderStatusRequest;
 import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import com.odev.repairapp.request.filter.FilterRepairOrderRequest;
 import com.odev.repairapp.response.RepairOrderResponse;
@@ -104,11 +105,12 @@ public class RepairOrderService {
         repairOrder.setRepairStatus(repairStatus);
 
         if (request.prePaid() != 0){
-            double due = request.totalCharges() - request.prePaid();
+            double due = request.totalCharge() - request.prePaid();
             repairOrder.setPaymentStatus( due < 1);
         }
 
         RepairOrder repairOrderSaved = repository.save(repairOrder);
+        System.out.println("cost==> "+repairOrderSaved.getTotalCost());
         return RepairOrderResponse.toResponse(repairOrderSaved);
     }
 
@@ -147,19 +149,43 @@ public class RepairOrderService {
 
         RepairOrder repairOrder = RepairOrderWithIdRequest.toEntity(request);
         repairOrder.setUuid(optionalRepairOrder.get().getUuid());
-        repairOrder.setRepairStatus(optionalRepairOrder.get().getRepairStatus());
         repairOrder.setRepairStatus(repairStatus);
         repairOrder.setRepairPriority(repairPriority);
         repairOrder.setDefects(defects);
         repairOrder.setDevice(device);
 
+        if (request.prePaid() != 0){
+            double due = request.totalCharge() - request.prePaid();
+            repairOrder.setPaymentStatus( due < 1);
+        }
+
+        repairOrder = repository.saveAndFlush(repairOrder);
+        return RepairOrderResponse.toResponse(repairOrder);
+    }
+    public RepairOrderResponse update(RepairOrderStatusRequest request){
+        List<String> errors = RepairOrderValidator.validate(request);
+        if (!errors.isEmpty())
+            throw new RepairAppException("Repair order is not valid", ErrorCode.REPAIR_ORDER_NOT_VALID, errors);
+
+        // Check if object already exists in database
+        RepairOrder repairOrder = repository
+                .findById(request.id())
+                .orElseThrow(() -> new RepairAppException(
+                        "RepairOrder is not found",
+                        ErrorCode.REPAIR_ORDER_NOT_FOUND
+                ));
+
+        RepairStatus repairStatus = repairStatusRepository.findById(request.statusId())
+                .orElseThrow(() -> new RepairAppException("Status not found", ErrorCode.REPAIR_STATUS_NOT_FOUND));
+
+        repairOrder.setRepairStatus(repairStatus);
         repairOrder = repository.saveAndFlush(repairOrder);
         return RepairOrderResponse.toResponse(repairOrder);
     }
 
     public void deleteById(IdRequest idRequest){
         Helper.hCheckIfIdNotNull(idRequest);
-        RepairOrder repairOrder = myFindById(idRequest);
+        myFindById(idRequest);
         repository.deleteById(idRequest.id());
     }
 

@@ -1,6 +1,7 @@
 package com.odev.repairapp.controller;
 
 import com.odev.repairapp.request.RepairOrderRequest;
+import com.odev.repairapp.request.RepairOrderStatusRequest;
 import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import com.odev.repairapp.request.IdRequest;
 import com.odev.repairapp.request.filter.FilterRepairOrderRequest;
@@ -50,6 +51,17 @@ public class RepairOrderController {
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('EDIT_REPAIR_ORDER')")
     public MyResponse<RepairOrderResponse> update(@RequestBody RepairOrderWithIdRequest request){
+        RepairOrderResponse data = service.update(request);
+        return MyResponse.<RepairOrderResponse>builder()
+                .status(HttpStatus.OK.value())
+                .message(ResponseMessage.DATA_UPDATED_SUCCESSFULLY)
+                .data(data)
+                .build();
+    }
+
+    @PatchMapping("/update/status")
+    @PreAuthorize("hasAuthority('EDIT_REPAIR_ORDER')")
+    public MyResponse<RepairOrderResponse> update(@RequestBody RepairOrderStatusRequest request){
         RepairOrderResponse data = service.update(request);
         return MyResponse.<RepairOrderResponse>builder()
                 .status(HttpStatus.OK.value())

@@ -1,6 +1,7 @@
 package com.odev.repairapp.validator;
 
 import com.odev.repairapp.request.RepairOrderRequest;
+import com.odev.repairapp.request.RepairOrderStatusRequest;
 import com.odev.repairapp.request.RepairOrderWithIdRequest;
 import org.springframework.util.StringUtils;
 
@@ -60,6 +61,19 @@ public class RepairOrderValidator {
 
         if (request.defectsIds() == null)
             errors.add("Order's defects should not be null");
+
+        return errors;
+    }
+
+    public static List<String> validate(RepairOrderStatusRequest request){
+        List<String> errors = new ArrayList<>();
+
+        if (request.id() == null)
+            errors.add("RepairOrder's ID should not be null");
+
+        if (request.statusId() == null){
+            errors.add("RepairOrder's status should not be null");
+        }
 
         return errors;
     }

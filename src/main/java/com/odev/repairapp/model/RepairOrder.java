@@ -28,7 +28,7 @@ public class RepairOrder {
     private String address;
     @Lob
     private String diagnostic;
-    private Double subTotal;
+    private double totalCharge;
     private double totalCost;
     private double prePaid;
     private LocalDateTime completedAt;
@@ -37,7 +37,6 @@ public class RepairOrder {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
     @OneToOne
     private Device device;
     @OneToOne
