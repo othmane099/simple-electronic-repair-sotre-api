@@ -19,54 +19,57 @@ BaseUrl: `http://localhost:8080`
 
 
 ## Endpoints
-- [Authentication](#auth)
-    - [Login](#)
-- [Dashboard](#)
-    - [Get dashboard](#)
-- [Repair Priority](#repair-priorities)
-    - [Get all priorities](#)
-    - [Get a priority](#get-a-priority)
-    - [Create a new priority](#)
-    - [Modify a priority](#)
-    - [Delete a priority](#)
-- [Quick Reply](#)
-    - [Get all replies](#)
-    - [Get a reply](#)
-    - [Create a new reply](#)
-    - [Modify a reply](#)
-    - [Delete a reply](#)
-- [Repair Status](#)
-    - [Get all statuses](#)
-    - [Get a status](#)
-    - [Create a new status](#)
-    - [Modify a status](#)
-    - [Delete a status](#)
-- [Brand](#)
-    - [Get all brands](#)
-    - [Get a brand](#)
-    - [Create a new brand](#)
-    - [Modify a brand](#)
-    - [Delete a brand](#)
-- [Device](#)
-    - [Get all devices](#)
-    - [Get a device](#)
-    - [Create a new device](#)
-    - [Modify a device](#)
-    - [Delete a device](#)
-- [Defect](#)
-    - [Get all defects](#)
-    - [Get a defect](#)
-    - [Create a new defect](#)
-    - [Modify a defect](#)
-    - [Delete a defect](#)
-- [Repair Orders](#)
-    - [Get all orders](#)
-    - [Get an order](#)
-    - [Create a new order](#)
-    - [Modify an order](#)
-    - [Delete an order](#)
-- [Users](#)
-    - [Create a new user](#)
+- [Authentication](#Authentication)
+    - [Login](#Login)
+- [Dashboard](#Dashboard)
+    - [Get dashboard](#Get-dashboard)
+- [Repair Priority](#Repair-Priority)
+    - [Get all priorities](#Get-all-priorities)
+    - [Get a priority](#Get-a-priority)
+    - [Save a priority](#Save-a-priority)
+    - [Modify a priority](#Modify-a-priority)
+    - [Delete a priority](#Delete-a-priority)
+- [Quick Reply](#Quick-Reply)
+    - [Get all quick replies](#Get-all-replies)
+    - [Get a quick reply](#Get-a-reply)
+    - [Save a quick reply](#Create-a-new-reply)
+    - [Modify a quick reply](#Modify-a-quick-reply)
+    - [Delete a reply](#Delete-a-quick-reply)
+- [Repair Status](#Repair-Status)
+    - [Get all statuses](#Get-all-statuses)
+    - [Get a status](#Get-a-status)
+    - [Save a status](#Save-a-status)
+    - [Modify a status](#Modify-a-status)
+    - [Delete a status](#Delete-a-status)
+- [Brand](#Brand)
+    - [Get all brands](#Get-all-brands)
+    - [Get a brand](#Get-a-brand)
+    - [Save a brand](#Save-a-brand)
+    - [Modify a brand](#Modify-a-brand)
+    - [Delete a brand](#Delete-a-brand)
+- [Device](#Device)
+    - [Get all devices](#Get-all-devices)
+    - [Get a device](#Get-a-device)
+    - [Save a device](#Save-a-device)
+    - [Modify a device](#Modify-a-device)
+    - [Delete a device](#Delete-a-device)
+- [Defect](#Defect)
+    - [Get all defects](#Get-all-defects)
+    - [Get a defect](#Get-a-defect)
+    - [Save a defect](#Save-a-defect)
+    - [Modify a defect](#Modify-a-defect)
+    - [Delete a defect](#Delete-a-defect)
+- [Repair Orders](#Repair-Order)
+    - [Get all orders](#Get-all-orders)
+    - [Get an order](#Get-an-order)
+    - [Save an order](#Save-an-order)
+    - [Modify an order](#Modify-an-order)
+    - [Modify an order status](#Modify-an-order-status)
+    - [Delete an order](#Delete-an-order)
+- [User](#User)
+    - [Save user](#Save-user)
+- [Backup](#Backup)
+    - [Create backup](#Create-backup)
 
 ## Authentication
 
@@ -1166,9 +1169,36 @@ The request body needs to be in JSON format. Example:
 
 | Name            | Type   | In     | Required | Description                         |
 | --------------- | ------ | ------ | -------- | ----------------------------------- |
-| `id`            | Long   | body   | Yes      | The order id you wish to delete.                      |
+| `id`            | Long   | body   | Yes      | The order id you wish to delete.    |
 
+## User
 
+For the following endpoints, `MANAGE_USER` authority is required.
+
+### Save user
+
+**`POST /users/save`**
+
+The request body needs to be in JSON format. Example:
+```
+{
+    "firstname": "FirstName",
+    "lastname": "LastName",
+    "email": "user@mail.com",
+    "password": "123456",
+    "authorityList": ["ACCESS_DASHBOARD"]
+}
+```
+
+**Parameters**
+
+| Name            | Type     | In    | Required | Description                                          |
+| --------------- | -------- | ----- | -------- | ---------------------------------------------------- |
+| `firstname`          | String   | body  | No      | Specifies the user's firstname .                 |
+| `lastname`          | String   | body  | No      | Specifies the user's lastname .                   |
+| `email`          | String   | body  | Yes      | Specifies the user's email .                        |
+| `password`          | String   | body  | Yes      | Specifies the user's password .                  |
+| `authorityList`          | List   | body  | Yes      | Specifies the user's assigned authorities .   |
 
 ## Backup
 
