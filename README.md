@@ -34,7 +34,7 @@ BaseUrl: `http://localhost:8080`
     - [Get a quick reply](#Get-a-reply)
     - [Save a quick reply](#Create-a-new-reply)
     - [Modify a quick reply](#Modify-a-quick-reply)
-    - [Delete a reply](#Delete-a-quick-reply)
+    - [Delete a quick reply](#Delete-a-quick-reply)
 - [Repair Status](#Repair-Status)
     - [Get all statuses](#Get-all-statuses)
     - [Get a status](#Get-a-status)
@@ -400,10 +400,13 @@ The request body needs to be in JSON format. Example:
 
 
 ## Repair status
+
 For the following endpoints, `MANAGE_REPAIR_STATUS` authority is required.
+
 ### Get all statuses
+
 **`GET /repair-statuses`**
-<br>
+
 Returns a list of statuses. Example:
 ```
 {
@@ -495,10 +498,12 @@ The request body needs to be in JSON format.
 | `id`            | Long   | body   | Yes      | Specifies the status id you wish to delete..            |
 
 ## Brand
+
 For the following endpoints, `MANAGE_BRAND` authority is required.
 ### Get all brands
+
 **`GET /brands`**
-<br>
+
 Returns a list of brands. Example:
 ```
 {
@@ -593,6 +598,7 @@ The request body needs to be in JSON format.
 
 
 ## Defect
+
 For the following endpoints, `MANAGE_DEFECT` authority is required.
 ### Get all defects
 
@@ -918,7 +924,8 @@ he request body needs to be in JSON format.
 | `id`            | Long   | body   | Yes      | The device id you wish to delete.                       |
 
 
-## Orders
+## Repair Order
+
 ### Get all orders
 
 **`GET /repair-orders`**
@@ -1002,7 +1009,7 @@ Returns a page of orders. Example:
 | `filterKey`     | enum     | body  | Yes      | Specifies the filter key. Could be `TRACKING`, `CUSTOMER_NAME`, `CUSTOMER_PHONE`, `UPDATED_AT` or `CREATED_AT`.|
 | `sorting`       | enum     | body  | Yes      | Specifies the sorting direction. Could be `DESC` or `ASC`.|
 
-### Get a repair order
+### Get an order
 
 **`GET /repair-orders/show`**
 
@@ -1047,7 +1054,7 @@ Returns a single order. Example:
 | `id`            | Long    | body  | Yes      | Specifies the order id you wish to retrieve.    |
 
 
-### Save a repair order
+### Save an order
 
 **`POST /repair-orders/save`**
 
@@ -1091,7 +1098,7 @@ The request body needs to be in JSON format. Example:
 | `repairStatusId`          | Long   | body  | Yes      | Specifies the status id of the order.|
 
 
-### Modify a repair order
+### Modify an order
 
 **`POST /repair-orders/update`**
 
@@ -1136,7 +1143,7 @@ The request body needs to be in JSON format. Example:
 | `deviceId`          | Long   | body  | Yes      | Specifies the order's device .|
 | `repairStatusId`          | Long   | body  | Yes      | Specifies the status id of the order.|
 
-### Modify an order's status
+### Modify an order status
 
 **`PATCH /repair-orders/update/status`**
 
@@ -1157,7 +1164,7 @@ The request body needs to be in JSON format. Example:
 | `id`          | Long   | body  | Yes      | Specifies the order's id.                        |
 | `statusId`          | Long   | body  | Yes      | Specifies the status id of the order.|
 
-### Delete a repair order
+### Delete an order
 
 **`DELETE /repair-orders/delete`**
 
@@ -1203,7 +1210,7 @@ The request body needs to be in JSON format. Example:
 ## Backup
 
 For the following endpoints, `MANAGE_BACKUP` authority is required.
-### Create a backup
+### Create backup
 
 **`GET /backup`**
 
