@@ -1,0 +1,1687 @@
+{
+	"info": {
+		"_postman_id": "a421dc0c-996d-4e60-93d1-ff19810357ed",
+		"name": "Repair App API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/v1/auth/authenticate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = pm.response.json().token;",
+							"pm.collectionVariables.set(\"token\", token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"admin@mail.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/authenticate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/auth/authenticate USER",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = pm.response.json().token;",
+							"pm.collectionVariables.set(\"token\", token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"Salma_McClure56@yahoo.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/authenticate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/users/save",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{$randomFirstName}}\",\n    \"lastname\": \"{{$randomLastName}}\",\n    \"email\":\"{{$randomEmail}}\",\n    \"password\":\"123456\",\n    \"authorityList\": [\"ACCESS_DASHBOARD\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dashboard",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentStatus\":1,\n    \"statusId\": null,\n    \"priorityId\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/dashboard",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-priorities",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/repair-priorities",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-priorities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-priorities/save",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"repair priority saved successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data['id']).to.not.null;",
+							"});",
+							"",
+							"pm.test(\"repair priority's name is empty\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql(\"REPAIR_PRIORITY_NOT_VALID\")",
+							"});",
+							"",
+							"pm.test(\"repair priority's name is unique\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql(\"REPAIR_PRIORITY_ALREADY_IN_USE\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// TEST 1\n// {\n//     \"priorityValue\":1,\n//     \"name\":\"normal\",\n//     \"extraCharge\":0\n// }\n\n// TEST 2\n// {\n//     \"priorityValue\":1,\n//     \"name\":\"\",\n//     \"extraCharge\":0\n// }\n\n// TEST 3\n{\n    \"priorityValue\":1,\n    \"name\":\"normal\",\n    \"extraCharge\":0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-priorities/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-priorities",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-priorities/update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var name = pm.request.body.name",
+							"pm.test(\"repair priority updated successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data['id']).to.not.eql(name);",
+							"});",
+							"",
+							"pm.test(\"repair priority'ID is null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_VALID');",
+							"});",
+							"",
+							"pm.test(\"repair priority'ID is not exist\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_FOUND');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjU5Mzg4NywiZXhwIjoxNjgyNTk1MzI3fQ.x9PcZWzeRqQfEk-af-f4lkDGMR5gRA6fG8vTtQ0kOQE",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"id\":1,\n//     \"priorityValue\":3,\n//     \"name\":\"high\",\n//     \"extraCharge\":500\n// }\n\n// {\n//     \"id\":null,\n//     \"priorityValue\":3,\n//     \"name\":\"high\",\n//     \"extraCharge\":500\n// }\n\n{\n    \"id\":5,\n    \"priorityValue\":3,\n    \"name\":\"high\",\n    \"extraCharge\":500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-priorities/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-priorities",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-priorities/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"repair priority'ID is not exist\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_FOUND');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjU5Mzg4NywiZXhwIjoxNjgyNTk1MzI3fQ.x9PcZWzeRqQfEk-af-f4lkDGMR5gRA6fG8vTtQ0kOQE",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-priorities/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-priorities",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quick-replies?page=0&size=3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4Mjg1NDE4NywiZXhwIjoxNjgyODU1NjI3fQ.TRvNnjlRzwKmhedRv7JVjarqv6IqyzKcnmPTkRXSBdY",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"keyword\":\"\",\n    \"filterKey\":\"NAME\",\n    \"sorting\":\"DESC\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/quick-replies?page=0&size=3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quick-replies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quick-replies/save?",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4Mjc3ODMyNCwiZXhwIjoxNjgyNzc5NzY0fQ.Pfz8rLY8hM6KfisVX_pNGWUo81a2vm0kaFdUNhepa3M",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"name6\",\n    \"body\": \"body6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/quick-replies/save?",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quick-replies",
+						"save"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quick-replies/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4Mjg1NDE4NywiZXhwIjoxNjgyODU1NjI3fQ.TRvNnjlRzwKmhedRv7JVjarqv6IqyzKcnmPTkRXSBdY",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":1,\n    \"name\":7,\n    \"body\":9\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/quick-replies/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quick-replies",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quick-replies/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4Mjc3ODMyNCwiZXhwIjoxNjgyNzc5NzY0fQ.Pfz8rLY8hM6KfisVX_pNGWUo81a2vm0kaFdUNhepa3M",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/quick-replies/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quick-replies",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-statuses",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-statuses",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-statuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-statuses/save",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"repair priority saved successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data['id']).to.not.null;",
+							"});",
+							"",
+							"pm.test(\"repair priority's name is empty\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql(\"REPAIR_PRIORITY_NOT_VALID\")",
+							"});",
+							"",
+							"pm.test(\"repair priority's name is unique\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql(\"REPAIR_PRIORITY_ALREADY_IN_USE\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"closed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-statuses/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-statuses",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-statuses/update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var name = pm.request.body.name",
+							"pm.test(\"repair priority updated successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data['id']).to.not.eql(name);",
+							"});",
+							"",
+							"pm.test(\"repair priority'ID is null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_VALID');",
+							"});",
+							"",
+							"pm.test(\"repair priority'ID is not exist\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_FOUND');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjU5Mzg4NywiZXhwIjoxNjgyNTk1MzI3fQ.x9PcZWzeRqQfEk-af-f4lkDGMR5gRA6fG8vTtQ0kOQE",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":1,\n    \"name\":\"moli\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-statuses/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-statuses",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-statuses/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"repair priority'ID is not exist\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorCode).to.eql('REPAIR_PRIORITY_NOT_FOUND');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjU5Mzg4NywiZXhwIjoxNjgyNTk1MzI3fQ.x9PcZWzeRqQfEk-af-f4lkDGMR5gRA6fG8vTtQ0kOQE",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-statuses/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-statuses",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/brands",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/brands",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/brands/save",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Apple\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/brands/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brands",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/brands/save/csv",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/othmane/IdeaProjects/RepairApp/brands.csv"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/brands/save/csv",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brands",
+						"save",
+						"csv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/brands/update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":1,\n    \"name\": \"Appl\",\n    \"devices\": [\n        {\n            \"id\":1,\n            \"name\": null,\n            \"brand\": null,\n            \"model\": null\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/brands/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brands",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/brands/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/brands/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brands",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Apple\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/devices",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/devices/save",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"inspiron 20\",\n    \"brandId\": 2,\n    \"model\": \"5000 series\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/devices/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"devices",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/devices/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\",\n    \"name\": \"inspiron 20\",\n    \"brandId\": 2,\n    \"model\": \"5000 series\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/devices/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"devices",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/devices/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/devices/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"devices",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/defects",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"keyword\": \"\",\n    \"filterKey\": \"CREATED_AT\",\n    \"sorting\": \"DESC\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/defects?size=2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"defects"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/defects/save",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"repair motherboard\",\n    \"requiredTime\": \"15d\",\n    \"cost\": 0.0,\n    \"deviceId\": 1,\n    \"price\": 8000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/defects/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"defects",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/defects/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"title\": \"repair motherboard\",\n    \"requiredTime\": \"16d\",\n    \"cost\": 0.0,\n    \"deviceId\": 1,\n    \"price\": 8000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/defects/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"defects",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/defects/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/defects/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"defects",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-orders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"keyword\": \"pending\",\n    \"filterKey\": \"CREATED_AT\",\n    \"sorting\": \"ASC\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-orders?size=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-orders"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-orders/save",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomFirstName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"phone\": \"{{$randomPhoneNumber}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"serialNumber\": \"{{$randomAlphaNumeric}}\",\n    \"diagnostics\": \"{{$randomLoremSentences}}\",\n    \"totalCost\": 10,\n    \"profit\": 20,\n    \"prePaid\": 30,\n    \"totalCharge\":30,\n    \"repairPriorityId\" : 1,\n    \"defectsIds\": [1],\n    \"deviceId\": 1,\n    \"repairStatusId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-orders/save",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-orders",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-orders/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"name\": \"123\",\n    \"email\": \"othmane1@mail.com\",\n    \"phone\": \"0555 321 890\",\n    \"address\": \"cirta hydra\",\n    \"serialNumber\": \"s123465\",\n    \"diagnostics\": \"write your long diagnostics text\",\n    \"repairPriorityId\" : 1,\n    \"defectsIds\": [1],\n    \"deviceId\": 1,\n    \"repairStatusId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-orders/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-orders",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/repair-orders/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4MjY5MDQ2MiwiZXhwIjoxNjgyNjkxOTAyfQ.3qI5KHZUc9mgDZEQqiIa5irS4gA0nkeaZBzAvvVdPak",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/repair-orders/delete",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"repair-orders",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/backup",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/backup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"backup"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

@@ -6,6 +6,6 @@ public class Constant {
 
     public static final int DEFAULT_PAGE = 0;
     public static final String DEFAULT_PAGE_STRING = "0";
-    public static final int DEFAULT_SIZE = 1;
-    public static final String DEFAULT_SIZE_STRING = "1";
+    public static final int DEFAULT_SIZE = 10;
+    public static final String DEFAULT_SIZE_STRING = "10";
 }
