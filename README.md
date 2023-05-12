@@ -1254,7 +1254,7 @@ Error codes are defined in `ErrorCode.enum`.
 
 ## Testing 
 
-Exported postman collection file in project folder may help on testing and exploring the API.
+Exported postman collection file `simple-electronic-repair-store-api.postman_collection.json` in project folder may help on testing and exploring the API.
 
 ## Contribution
 
